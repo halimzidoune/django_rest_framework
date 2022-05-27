@@ -1,11 +1,14 @@
 import imp
-from django.http import JsonResponse
+# from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
 from django.forms.models import model_to_dict
 import json
 from products.models import Product
 
 
-
+@api_view(["GET"])
 def product(request, *args, **kwargs):
     product = Product.objects.all().order_by("?").first()
 
@@ -14,7 +17,7 @@ def product(request, *args, **kwargs):
     if product:
         # data = model_to_dict(product)
         data = model_to_dict(product, fields=['title', 'price'])
-        return JsonResponse(data)
+        return Response(data)
 
 
 def api_home(request, *args, **kwargs):
