@@ -1,7 +1,10 @@
 import imp
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
 import json
 from products.models import Product
+
+
 
 def product(request, *args, **kwargs):
     product = Product.objects.all().order_by("?").first()
@@ -9,10 +12,8 @@ def product(request, *args, **kwargs):
     data = {}
     
     if product:
-        data['id'] = product.id
-        data['title'] = product.title
-        data['price'] = product.price
-        data['content'] = product.content
+        # data = model_to_dict(product)
+        data = model_to_dict(product, fields=['title', 'price'])
         return JsonResponse(data)
 
 
