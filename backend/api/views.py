@@ -1,7 +1,7 @@
 import imp
 from django.http import JsonResponse
 
-def home(request, *args, **kwwargs):
+def api_home(request, *args, **kwargs):
     return JsonResponse({
         "message": "Hello wolrd !"
     })
