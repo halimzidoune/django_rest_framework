@@ -7,11 +7,18 @@ from . import serializers
 
 class ProductMixinView(
     mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+
     generics.GenericAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = 'pk'
+    
 
     def get(self, request, *args, **kwargs):
+        pk = kwargs.get("pk")
+        if pk is not None:
+            return self.retrieve(request, *args, **kwargs)
         return self.list(request, *args, **kwargs)
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
