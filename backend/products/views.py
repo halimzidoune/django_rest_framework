@@ -8,6 +8,7 @@ from . import serializers
 class ProductMixinView(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
 
     generics.GenericAPIView):
     queryset = Product.objects.all()
@@ -20,6 +21,9 @@ class ProductMixinView(
         if pk is not None:
             return self.retrieve(request, *args, **kwargs)
         return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
