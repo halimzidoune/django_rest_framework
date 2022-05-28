@@ -9,6 +9,14 @@ class ProductCreateAPIView(generics.CreateAPIView):
     serializer_class = ProductSerializer
     # lookup_field = 'pk'
 
+    def perform_create(self, serializer):
+        title= serializer.validated_data.get('title')
+        content = serializer.validated_data.get('content') or None
+        if(content is None):
+            content = title
+        serializer.save( content = content)
+
+
 class ProductDetailsAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
